@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+    File Cleanup Service Command Line Help
+-------------------------------------------------------------------------------
+
+Usage: Neis.FileCleanup.Service.exe [-c] [-?]
+
+Options:
+
+   -c           Runs the program as a console application instead of a service
+
+   -?           Displays the help context

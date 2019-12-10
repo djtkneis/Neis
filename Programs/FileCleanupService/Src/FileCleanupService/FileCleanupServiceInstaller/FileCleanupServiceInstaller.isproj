@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<!-- Select a Product Configuration -->
+		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
+		<!-- Select a Visual Studio Configuration / InstallShield Release -->
+		<Configuration>Debug</Configuration>
+		<InstallShieldRelease>$(Configuration)</InstallShieldRelease>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- The InstallShieldProject item selects the project to build -->
+		<InstallShieldProject Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).isl"/>
+		<!-- The InstallShieldReleaseFlags sets Release Flags -->
+		<!--<InstallShieldReleaseFlags Include=""/>-->
+		<!-- The InstallShieldMergeModulePath specifies what directories are
+		searched for Merge Modules -->
+		<!--<InstallShieldMergeModulePath Include=""/>-->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The ProjectReference items refer to any Visual Studio solutions you want to automatically probe for Project Output Groups.  -->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The TaggedOutputs items allow you to explicitly add extra files to output groups. Each item must include both Name and OutputGroup, as well as TargetPath metadata values. -->
+		<!--<TaggedOutputs Include="C:\My Test Exe.exe">
+			<Name>My Test Project</Name>
+			<OutputGroup>Primary output</OutputGroup>
+			<TargetPath>My Test Exe.exe</TargetPath>
+		</TaggedOutputs> -->
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2013Limited\InstallShield.targets"/>
+	<ItemGroup>
+		<ProjectReference Include="..\FileCleanupConfiguration\FileCleanupConfiguration.csproj">
+			<Name>FileCleanupConfiguration</Name>
+			<Project>{3934A199-4D32-4A6C-BC86-06126BDF2954}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\FileCleanupService\FileCleanupService.csproj">
+			<Name>FileCleanupService</Name>
+			<Project>{35A80FCD-442A-418A-8F59-FB5E24E81CB1}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\FileCleanupTool\FileCleanupTool.csproj">
+			<Name>FileCleanupTool</Name>
+			<Project>{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\..\..\..\..\Common\Logging\Logging.csproj">
+			<Name>Logging</Name>
+			<Project>{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}</Project>
+		</ProjectReference>
+	</ItemGroup>
+</Project>

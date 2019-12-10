@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Serializable Property</Title>
+      <Author>Anthony J. Neis</Author>
+      <Description>Basic XML Serializable Property</Description>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>name</ID>
+          <ToolTip>Replace with property name</ToolTip>
+          <Default>Property</Default>
+        </Literal>
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Replace with property data type</ToolTip>
+          <Default>string</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[
+        #region $name$
+        /// <summary>
+        /// Property name for the $name$ property
+        /// </summary>
+        public const string $name$PropertyName = "$name$";
+
+        private $type$ _$name$;
+
+        /// <summary>
+        /// Gets or sets $name$
+        /// </summary>
+        [System.Xml.Serialization.XmlElement("$name$")]
+        public $type$ $name$
+        {
+            get { return _$name$; }
+            set
+            {
+                if (_$name$ != value)
+                {
+                    _$name$ = value;
+                }
+            }
+        }
+        #endregion
+                ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

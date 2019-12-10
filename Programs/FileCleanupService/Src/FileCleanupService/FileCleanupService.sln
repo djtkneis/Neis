@@ -1,0 +1,109 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30219.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCleanupService", "FileCleanupService\FileCleanupService.csproj", "{35A80FCD-442A-418A-8F59-FB5E24E81CB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{EE7C383A-4B75-4DFD-BD43-A81063435A9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\..\..\Common\Logging\Logging.csproj", "{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCleanupTool", "FileCleanupTool\FileCleanupTool.csproj", "{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCleanupConfiguration", "FileCleanupConfiguration\FileCleanupConfiguration.csproj", "{3934A199-4D32-4A6C-BC86-06126BDF2954}"
+EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "FileCleanupServiceInstaller", "FileCleanupServiceInstaller\FileCleanupServiceInstaller.isproj", "{5AB70F06-1BD4-430D-B277-7CCE954B0160}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B} = {D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}
+		{3934A199-4D32-4A6C-BC86-06126BDF2954} = {3934A199-4D32-4A6C-BC86-06126BDF2954}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://anthonyneis.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = FileCleanupService\\FileCleanupService.csproj
+		SccProjectName1 = FileCleanupService
+		SccLocalPath1 = FileCleanupService
+		SccProjectUniqueName2 = ..\\..\\..\\..\\Common\\Logging\\Logging.csproj
+		SccProjectTopLevelParentUniqueName2 = FileCleanupService.sln
+		SccProjectName2 = ../../../../Common/Logging
+		SccLocalPath2 = ..\\..\\..\\..\\Common\\Logging
+		SccProjectUniqueName3 = FileCleanupTool\\FileCleanupTool.csproj
+		SccProjectName3 = FileCleanupTool
+		SccLocalPath3 = FileCleanupTool
+		SccProjectUniqueName4 = FileCleanupConfiguration\\FileCleanupConfiguration.csproj
+		SccProjectName4 = FileCleanupConfiguration
+		SccLocalPath4 = FileCleanupConfiguration
+		SccProjectUniqueName5 = FileCleanupServiceInstaller\\FileCleanupServiceInstaller.isproj
+		SccProjectName5 = FileCleanupServiceInstaller
+		SccLocalPath5 = FileCleanupServiceInstaller
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		DVD-5|Any CPU = DVD-5|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SingleImage|Any CPU = SingleImage|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{35A80FCD-442A-418A-8F59-FB5E24E81CB1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{E44DC654-9DE7-42B7-B7A8-E4167E854ECF}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{3934A199-4D32-4A6C-BC86-06126BDF2954}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.CD_ROM|Any CPU.Build.0 = CD_ROM
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.Debug|Any CPU.ActiveCfg = DVD-5
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.DVD-5|Any CPU.ActiveCfg = DVD-5
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.DVD-5|Any CPU.Build.0 = DVD-5
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.Release|Any CPU.ActiveCfg = SingleImage
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.Release|Any CPU.Build.0 = SingleImage
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.SingleImage|Any CPU.ActiveCfg = SingleImage
+		{5AB70F06-1BD4-430D-B277-7CCE954B0160}.SingleImage|Any CPU.Build.0 = SingleImage
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B} = {EE7C383A-4B75-4DFD-BD43-A81063435A9F}
+	EndGlobalSection
+EndGlobal
