@@ -12,13 +12,13 @@ namespace Neis.ProductKeyManager.Tester.Controls
     /// </summary>
     public class TreeNode_MSDNKey : TreeNode
     {
-        Data.Microsoft.Key _key;
+        Data.Microsoft.MicrosoftKey _key;
 
         /// <summary>
         /// Constructor for the <see cref="TreeNode_MSDNKey"/> class
         /// </summary>
-        /// <param name="key"><see cref="Data.Microsoft.Key"/></param>
-        public TreeNode_MSDNKey(Data.Microsoft.Key key)
+        /// <param name="key"><see cref="Data.Microsoft.MicrosoftKey"/></param>
+        public TreeNode_MSDNKey(Data.Microsoft.MicrosoftKey key)
         {
             Key = key;
         }
@@ -26,7 +26,7 @@ namespace Neis.ProductKeyManager.Tester.Controls
         /// <summary>
         /// Gets or sets ths key
         /// </summary>
-        public Data.Microsoft.Key Key
+        public Data.Microsoft.MicrosoftKey Key
         {
             get { return _key; }
             set

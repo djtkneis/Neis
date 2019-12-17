@@ -7,13 +7,13 @@ namespace Neis.ProductKeyManager.Tester.Controls
     /// </summary>
     public class TreeNode_MSDNProduct : TreeNode
     {
-        Data.Microsoft.Product _product;
+        Data.Microsoft.MicrosoftProduct _product;
 
         /// <summary>
         /// Constructor for the <see cref="TreeNode_MSDNProduct"/> class
         /// </summary>
-        /// <param name="product"><see cref="Data.Microsoft.Product"/></param>
-        public TreeNode_MSDNProduct(Data.Microsoft.Product product)
+        /// <param name="product"><see cref="Data.Microsoft.MicrosoftProduct"/></param>
+        public TreeNode_MSDNProduct(Data.Microsoft.MicrosoftProduct product)
         {
             Product = product;
         }
@@ -21,7 +21,7 @@ namespace Neis.ProductKeyManager.Tester.Controls
         /// <summary>
         /// Gets or sets the Product
         /// </summary>
-        public Data.Microsoft.Product Product
+        public Data.Microsoft.MicrosoftProduct Product
         {
             get { return _product; }
             set 
@@ -30,7 +30,7 @@ namespace Neis.ProductKeyManager.Tester.Controls
                 this.Text = _product.Name;
 
                 this.Nodes.Clear();
-                foreach(Data.Microsoft.Key key in _product.Keys)
+                foreach(Data.Microsoft.MicrosoftKey key in _product.Keys)
                 {
                     this.Nodes.Add(new TreeNode_MSDNKey(key));
                 }

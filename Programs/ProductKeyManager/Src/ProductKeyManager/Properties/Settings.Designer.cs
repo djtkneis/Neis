@@ -22,5 +22,14 @@ namespace Neis.ProductKeyManager.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("keys.dat")]
+        public string DataFile {
+            get {
+                return ((string)(this["DataFile"]));
+            }
+        }
     }
 }

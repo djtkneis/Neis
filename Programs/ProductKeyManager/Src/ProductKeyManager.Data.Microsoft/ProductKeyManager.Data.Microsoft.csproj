@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Key.cs" />
-    <Compile Include="KeyFile.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="MicrosoftKey.cs" />
+    <Compile Include="MicrosoftKeyFile.cs" />
+    <Compile Include="MicrosoftProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

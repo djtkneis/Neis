@@ -44,9 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseKey.cs" />
-    <Compile Include="BaseKeyFile.cs" />
-    <Compile Include="BaseProduct.cs" />
+    <Compile Include="GenericKey.cs" />
+    <Compile Include="GenericKeyFile.cs" />
+    <Compile Include="GenericProduct.cs" />
+    <Compile Include="DataUtility.cs" />
     <Compile Include="NotifiableBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

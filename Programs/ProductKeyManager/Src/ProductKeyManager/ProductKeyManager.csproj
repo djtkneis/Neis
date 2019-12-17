@@ -98,6 +98,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProductKeyManager.Data.Microsoft\ProductKeyManager.Data.Microsoft.csproj">
+      <Project>{cca6b0a8-e1fb-4d1f-a65d-a7d7885337c7}</Project>
+      <Name>ProductKeyManager.Data.Microsoft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductKeyManager.Data\ProductKeyManager.Data.csproj">
+      <Project>{2e7a0bdb-fc72-4e01-ab47-c1f1f0aee793}</Project>
+      <Name>ProductKeyManager.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,13 +1,13 @@
-﻿<Window x:Class="ProductKeyManager.MainWindow"
+﻿<Window x:Class="Neis.ProductKeyManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:ProductKeyManager"
+        xmlns:local="clr-namespace:Neis.ProductKeyManager"
         Title="Product Key Manager" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>  <!-- Header -->
-            <RowDefinition />               <!-- Body -->
-            <RowDefinition Height="*"/>     <!-- Footer -->
+            <RowDefinition Height="*"/>               <!-- Body -->
+            <RowDefinition Height="Auto" MinHeight="18"/>     <!-- Footer -->
         </Grid.RowDefinitions>
 
         <Menu Grid.Column="0" Grid.Row="0"
@@ -16,12 +16,20 @@
             <Menu.Items>
                 <MenuItem Header="_File">
                     <MenuItem.Items>
+                        <MenuItem Header="_Save"
+                                  Command="local:MainWindow.SaveCommand"/>
+                        <MenuItem Header="_Import"
+                                  Command="local:MainWindow.ImportCommand"/>
                         <MenuItem Header="E_xit"
                                   Command="local:MainWindow.ExitCommand"/>
                     </MenuItem.Items>
                 </MenuItem>
             </Menu.Items>
         </Menu>
+
+        <StackPanel Grid.Row="1" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                    Margin="10" />
 
     </Grid>
 </Window>

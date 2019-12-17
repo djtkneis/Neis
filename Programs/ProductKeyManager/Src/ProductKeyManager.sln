@@ -11,37 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B9E187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\..\Common\Logging\Logging.csproj", "{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductKeyManager.Tester", "ProductKeyManager.Tester\ProductKeyManager.Tester.csproj", "{13F0663A-1E2D-4F43-9859-C4B2BA66FF73}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{2C94488F-7B28-4D72-B344-190A4B70599B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductKeyManager.Data.Microsoft", "ProductKeyManager.Data.Microsoft\ProductKeyManager.Data.Microsoft.csproj", "{CCA6B0A8-E1FB-4D1F-A65D-A7D7885337C7}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://anthonyneis.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ..\\..\\..\\Common\\Logging\\Logging.csproj
-		SccProjectTopLevelParentUniqueName1 = ProductKeyManager.sln
-		SccProjectName1 = ../../../Common/Logging
-		SccLocalPath1 = ..\\..\\..\\Common\\Logging
-		SccProjectUniqueName2 = ProductKeyManager.Data\\ProductKeyManager.Data.csproj
-		SccProjectTopLevelParentUniqueName2 = ProductKeyManager.sln
-		SccProjectName2 = ProductKeyManager.Data
-		SccLocalPath2 = ProductKeyManager.Data
-		SccProjectUniqueName3 = ProductKeyManager.Tester\\ProductKeyManager.Tester.csproj
-		SccProjectName3 = ProductKeyManager.Tester
-		SccLocalPath3 = ProductKeyManager.Tester
-		SccProjectUniqueName4 = ProductKeyManager\\ProductKeyManager.csproj
-		SccProjectName4 = ProductKeyManager
-		SccLocalPath4 = ProductKeyManager
-		SccProjectUniqueName5 = ProductKeyManager.Data.Microsoft\\ProductKeyManager.Data.Microsoft.csproj
-		SccProjectTopLevelParentUniqueName5 = ProductKeyManager.sln
-		SccProjectName5 = ProductKeyManager.Data.Microsoft
-		SccLocalPath5 = ProductKeyManager.Data.Microsoft
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -59,10 +33,6 @@ Global
 		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13F0663A-1E2D-4F43-9859-C4B2BA66FF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13F0663A-1E2D-4F43-9859-C4B2BA66FF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13F0663A-1E2D-4F43-9859-C4B2BA66FF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13F0663A-1E2D-4F43-9859-C4B2BA66FF73}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCA6B0A8-E1FB-4D1F-A65D-A7D7885337C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCA6B0A8-E1FB-4D1F-A65D-A7D7885337C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCA6B0A8-E1FB-4D1F-A65D-A7D7885337C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,8 +42,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B} = {B9E187A4-36E1-4720-A885-73410CD96ED0}
 		{2E7A0BDB-FC72-4E01-AB47-C1F1F0AEE793} = {2C94488F-7B28-4D72-B344-190A4B70599B}
 		{CCA6B0A8-E1FB-4D1F-A65D-A7D7885337C7} = {2C94488F-7B28-4D72-B344-190A4B70599B}
+		{D5206A06-F3A6-4E61-924D-0B3D5CCD2B1B} = {B9E187A4-36E1-4720-A885-73410CD96ED0}
 	EndGlobalSection
 EndGlobal

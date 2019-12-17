@@ -36,10 +36,10 @@ namespace Neis.ProductKeyManager.Tester.Controls
                 return;
             }
 
-            Data.Microsoft.KeyFile keyFile = Data.Microsoft.KeyFile.Load(_selectFileControl.FileName);
+            Data.Microsoft.MicrosoftKeyFile keyFile = Data.Microsoft.MicrosoftKeyFile.Load(_selectFileControl.FileName);
 
             _tvContents.Nodes.Clear();
-            foreach (Data.Microsoft.Product product in keyFile.Products)
+            foreach (Data.Microsoft.MicrosoftProduct product in keyFile.Products)
             {
                 _tvContents.Nodes.Add(new TreeNode_MSDNProduct(product));
             }
