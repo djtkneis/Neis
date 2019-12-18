@@ -1,4 +1,5 @@
 /$tf
-/Programs/ProductKeyManager/Src/ProductKeyManager/bin/Debug
 bin
 obj
+*.suo
+*.user
