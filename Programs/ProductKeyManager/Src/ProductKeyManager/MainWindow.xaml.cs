@@ -16,7 +16,7 @@ namespace Neis.ProductKeyManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         /// <summary>
         /// Exit Command
@@ -30,25 +30,6 @@ namespace Neis.ProductKeyManager
         /// Save Command
         /// </summary>
         public static RoutedCommand SaveCommand = new RoutedCommand("SaveCommand", typeof(MainWindow));
-
-        #region INotifyPropertyChanged
-        /// <summary>
-        /// Event for when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises the <see cref="PropertyChanged"/> event
-        /// </summary>
-        /// <param name="property">Name of property that changed</param>
-        protected void NotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
-            }
-        }
-        #endregion
 
         #region KeyFile
         /// <summary>
@@ -73,43 +54,55 @@ namespace Neis.ProductKeyManager
             }
             return (GenericKeyFile)this.GetValue(KeyFileProperty);
         }
-        private void SetKeyFile(GenericKeyFile kf)
+        private void SetKeyFile(GenericKeyFile value)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(new Action<GenericKeyFile>(this.SetKeyFile), kf);
+                Dispatcher.Invoke(new Action<GenericKeyFile>(this.SetKeyFile), value);
                 return;
             }
-            this.SetValue(KeyFileProperty, kf);
-            this._productsViewSource.Source = kf.Products;
-            this.Products.Refresh();
+            this.SetValue(KeyFileProperty, value);
         }
         #endregion
 
-        #region Products
+        #region ProductsView
         /// <summary>
-        /// Dependency property declaration for the Products property
+        /// Dependency property declaration for the ProductsView property
         /// </summary>
-        public static readonly DependencyProperty ProductsProperty = DependencyProperty.Register("Products", typeof(ICollectionView), typeof(MainWindow), new UIPropertyMetadata());
-
+        public static readonly DependencyProperty ProductsViewProperty =
+            DependencyProperty.Register("ProductsView", typeof(ICollectionView), typeof(MainWindow), new UIPropertyMetadata());
+        
         /// <summary>
-        /// Gets or sets the Products property
-        /// </summary>
-        public ICollectionView Products
+        /// Gets or sets the ProductsView property
+        /// </summary>        
+        public ICollectionView ProductsView
         {
-            get { return GetProducts(); }
+            get { return GetProductsView(); }
+            set { this.SetProductsView(value); }
         }
-        private ICollectionView GetProducts()
+        private ICollectionView GetProductsView()
         {
             if (!Dispatcher.CheckAccess())
             {
-                return Dispatcher.Invoke(new Func<ICollectionView>(this.GetProducts)) as ICollectionView;
+                return Dispatcher.Invoke(new Func<ICollectionView>(this.GetProductsView)) as ICollectionView;
             }
-            return (ICollectionView)this._productsViewSource.View;
+            return (ICollectionView)this.GetValue(ProductsViewProperty);
+        }
+        private void SetProductsView(ICollectionView value)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new Action<ICollectionView>(this.SetProductsView), value);
+                return;
+            }
+            this.SetValue(ProductsViewProperty, value);
         }
         #endregion
 
-        private CollectionViewSource _productsViewSource = new CollectionViewSource();
+        private delegate int MergeKeysDelegate(string product, ObservableCollection<GenericKey> keys);
+        private delegate int MergeGenericProductsDelegate(ObservableCollection<GenericProduct> products);
+        private delegate int MergeMicrosoftProductsDelegate(ObservableCollection<MicrosoftProduct> products);
+
         private BackgroundWorker _loadingWorker = new BackgroundWorker();
         private volatile Dictionary<string, GenericProduct> _products = new Dictionary<string, GenericProduct>();
 
@@ -124,6 +117,9 @@ namespace Neis.ProductKeyManager
             CommandBindings.Add(new CommandBinding(ImportCommand, ExecuteImportCommand, IsDoneLoading));
             CommandBindings.Add(new CommandBinding(SaveCommand, ExecuteSaveCommand));
 
+            KeyFile = new GenericKeyFile();
+            ProductsView = CollectionViewSource.GetDefaultView(KeyFile.Products);
+
             this.SetStatus("Initializing stored keys");
 
             _loadingWorker.DoWork += _loadingWorker_DoWork;
@@ -137,15 +133,10 @@ namespace Neis.ProductKeyManager
         /// <param name="e">Arguments for this event</param>
         void _loadingWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (!File.Exists(Properties.Settings.Default.DataFile) || new FileInfo(Properties.Settings.Default.DataFile).Length == 0)
+            if (File.Exists(Properties.Settings.Default.DataFile) && new FileInfo(Properties.Settings.Default.DataFile).Length > 0)
             {
-                KeyFile = new GenericKeyFile();
-                SaveCache();
-            }
-            else
-            {
-                KeyFile = DataUtility<GenericKeyFile>.LoadFromFile(Properties.Settings.Default.DataFile);
-                MergeProducts(KeyFile.Products);
+                var kf = DataUtility<GenericKeyFile>.LoadFromFile(Properties.Settings.Default.DataFile);
+                MergeGenericProducts(kf.Products);
             }
 
             SetDefaultStatus();
@@ -200,7 +191,7 @@ namespace Neis.ProductKeyManager
                         MessageBoxImage.Error);
                 }
 
-                var keyCount = MergeProducts(import.Products);
+                var keyCount = MergeMicrosoftProducts(import.Products);
                 if (keyCount > 0)
                 {
                     SaveCache();
@@ -235,6 +226,7 @@ namespace Neis.ProductKeyManager
             SetStatus("Save complete");
         }
 
+
         /// <summary>
         /// Merge a list of keys into a given product
         /// </summary>
@@ -243,6 +235,11 @@ namespace Neis.ProductKeyManager
         /// <returns>Number of keys that were added</returns>
         private int MergeKeys(string product, ObservableCollection<GenericKey> keys)
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                return (int)Dispatcher.Invoke(new MergeKeysDelegate(MergeKeys), product, keys);
+            }
+
             int keyCount = 0;
             GenericProduct cp = null;
             foreach (var p in KeyFile.Products)
@@ -293,8 +290,13 @@ namespace Neis.ProductKeyManager
         /// </summary>
         /// <param name="products">List of <see cref="GenericProduct"/> objects to merge</param>
         /// <returns>Number of keys that were added</returns>
-        private int MergeProducts(ObservableCollection<GenericProduct> products)
+        private int MergeGenericProducts(ObservableCollection<GenericProduct> products)
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                return (int)Dispatcher.Invoke(new MergeGenericProductsDelegate(MergeGenericProducts), products);
+            }
+
             int keyCount = 0;
             foreach (var product in products)
             {
@@ -307,8 +309,13 @@ namespace Neis.ProductKeyManager
         /// </summary>
         /// <param name="products">List of <see cref="MicrosoftProduct"/> objects to merge</param>
         /// <returns>Number of keys that were added</returns>
-        private int MergeProducts(ObservableCollection<MicrosoftProduct> products)
+        private int MergeMicrosoftProducts(ObservableCollection<MicrosoftProduct> products)
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                return (int)Dispatcher.Invoke(new MergeMicrosoftProductsDelegate(MergeMicrosoftProducts), products);
+            }
+
             int keyCount = 0;
             foreach (var product in products)
             {
@@ -330,6 +337,7 @@ namespace Neis.ProductKeyManager
             return keyCount;
         }
 
+
         /// <summary>
         /// Saves the current cache
         /// </summary>
@@ -338,6 +346,24 @@ namespace Neis.ProductKeyManager
             DataUtility<GenericKeyFile>.SaveToFile(Properties.Settings.Default.DataFile, KeyFile);
         }
 
+        /// <summary>
+        /// Sets a given status message
+        /// </summary>
+        /// <param name="message"></param>
+        private void SetStatus(string message)
+        {
+            //TODO: Add a timer that will change the status message back to the default message after a given interval
+
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new Action<string>(this.SetStatus), message);
+                return;
+            }
+            this.txtStatusBar.Text = message;
+        }
+        /// <summary>
+        /// Sets the default status message
+        /// </summary>
         private void SetDefaultStatus()
         {
             int keycount = 0;
@@ -345,16 +371,6 @@ namespace Neis.ProductKeyManager
             { keycount += p.Keys.Count; }
 
             SetStatus(string.Format("{0} Products and {1} keys", KeyFile.Products.Count, keycount));
-        }
-
-        private void SetStatus(string message)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new Action<string>(this.SetStatus), message);
-                return;
-            }
-            this.txtStatusBar.Text = message;
         }
     }
 }

@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Neis.ProductKeyManager"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-        xmlns:cnv="clr-namespace:Neis.ProductKeyManager.Value_Converters"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:controls="clr-namespace:Neis.ProductKeyManager.Controls"
         Title="Product Key Manager" Height="500" Width="800" 
         x:Name="_this">
     <Window.Resources>
@@ -11,10 +12,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <cnv:TrimTextConverter x:Key="TrimTextConverter" />
         </ResourceDictionary>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>  <!-- Header -->
@@ -43,28 +43,11 @@
                       Margin="10"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ItemsControl Name="icProducts" 
-                          ItemsSource="{Binding ElementName=_this, Path=KeyFile.Products, diag:PresentationTraceSources.TraceLevel=High}">
+            <ItemsControl Name="icProducts"
+                          ItemsSource="{Binding ElementName=_this, Path=ProductsView, diag:PresentationTraceSources.TraceLevel=High}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Expander>
-                                <Expander.Header>
-                                    <TextBlock Style="{StaticResource ExpanderHeaderTextBlock}" 
-                                               Text="{Binding Name, Converter={StaticResource TrimTextConverter}}" />
-                                </Expander.Header>
-                                <ItemsControl ItemsSource="{Binding Keys}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <TextBox Style="{StaticResource KeyTextBox}"
-                                                         Text="{Binding Value, Converter={StaticResource TrimTextConverter}}" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Expander>
-                        </StackPanel>
+                        <controls:ProductControl />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

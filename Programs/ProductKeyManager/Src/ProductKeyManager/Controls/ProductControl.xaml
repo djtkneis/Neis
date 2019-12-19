@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Neis.ProductKeyManager.Controls.ProductControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Neis.ProductKeyManager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Style="{StaticResource GridProducts}">
+        <Expander>
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource ExpanderHeaderTextBlock}" />
+                    <TextBlock Style="{StaticResource KeyCountTextBlock}" />
+                    <Button Style="{StaticResource EditButton}" Command="controls:ProductControl.EditCommand" />
+                    <Button Style="{StaticResource DeleteButton}" Command="controls:ProductControl.DeleteCommand" />
+                </StackPanel>
+            </Expander.Header>
+            <ItemsControl ItemsSource="{Binding Keys}" Margin="25,0,0,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:KeyControl />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Expander>
+    </Grid>
+</UserControl>

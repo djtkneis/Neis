@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,7 +59,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\KeyControl.xaml.cs">
+      <DependentUpon>KeyControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProductControl.xaml.cs">
+      <DependentUpon>ProductControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Value Converters\TrimTextConverter.cs" />
+    <Page Include="Controls\KeyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProductControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,7 +87,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ProductView.xaml">
+    <Page Include="Resources\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -82,9 +97,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductView.xaml.cs">
-      <DependentUpon>ProductView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,6 +132,13 @@
       <Project>{2e7a0bdb-fc72-4e01-ab47-c1f1f0aee793}</Project>
       <Name>ProductKeyManager.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\copy_to_clipboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\delete.png" />
+    <Resource Include="Resources\images\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
