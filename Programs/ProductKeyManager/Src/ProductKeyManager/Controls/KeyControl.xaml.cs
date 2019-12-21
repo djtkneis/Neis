@@ -61,7 +61,12 @@ namespace Neis.ProductKeyManager.Controls
 
             Clipboard.SetText(key.Value);
 
-            MessageBox.Show(string.Format("Key '{0}' copied to clipboard.", key.Value), "Key copied", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(
+                Application.Current.MainWindow, 
+                string.Format("Key '{0}' copied to clipboard.", key.Value), 
+                "Key copied", 
+                MessageBoxButton.OK, 
+                MessageBoxImage.Information);
         }
     }
 }

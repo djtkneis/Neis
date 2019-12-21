@@ -197,7 +197,8 @@ namespace Neis.ProductKeyManager
 
                 if (importKeyCount == 0)
                 {
-                    var res = MessageBox.Show(this,
+                    var res = MessageBox.Show(
+                        Application.Current.MainWindow,
                         "The file did not contain any keys to load.",
                         "No keys loaded",
                         MessageBoxButton.OK,
@@ -208,7 +209,8 @@ namespace Neis.ProductKeyManager
                 if (keyCount > 0)
                 {
                     SaveCache();
-                    MessageBox.Show(this,
+                    MessageBox.Show(
+                        Application.Current.MainWindow,
                         string.Format("{0} keys loaded from file.  After merging {1} keys were added.", importKeyCount, keyCount),
                         "Import successful",
                         MessageBoxButton.OK,
@@ -217,7 +219,8 @@ namespace Neis.ProductKeyManager
                 }
                 else
                 {
-                    var res = MessageBox.Show(this,
+                    var res = MessageBox.Show(
+                        Application.Current.MainWindow,
                         string.Format("{0} keys loaded from file however, 0 keys were added.  Most likely the keys were already present", importKeyCount),
                         "No keys added",
                         MessageBoxButton.OK,

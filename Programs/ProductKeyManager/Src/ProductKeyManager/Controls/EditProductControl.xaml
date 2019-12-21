@@ -2,32 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Neis.ProductKeyManager.Controls"
-        Title="Edit Product" Height="300" Width="500" ResizeMode="NoResize">
+        Title="Edit Product" Height="300" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate x:Key="EditKeyTemplate">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBox Grid.Column="0" Grid.Row="0"
-                             Text="{Binding Value}"
-                             Style="{StaticResource TextBoxEditProductName}" />
-                    <Button Grid.Column="1" 
-                            Style="{StaticResource DeleteButton}" 
-                            Command="controls:EditProductControl.DeleteKeyCommand" CommandParameter="{Binding }" />
-                </Grid>
-            </DataTemplate>
-
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -35,8 +18,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Product -->
@@ -44,26 +27,30 @@
                    Text="Product:" 
                    Style="{DynamicResource EditProductTextBlock}"/>
         <TextBox Grid.Column="1" Grid.Row="0" 
-                 Style="{DynamicResource TextBoxEditProductName}"
+                 Style="{DynamicResource EditProductNameTextBox}"
                  Text="{Binding Name}" />
 
 
         <!-- Keys -->
-        <Border Grid.Column="0" Grid.Row="1"
-                Grid.ColumnSpan="2" Grid.RowSpan="2"
-                BorderThickness="1" />
-        <TextBlock Grid.Column="0" Grid.Row="1" 
-                   Text="Keys: " 
-                   Style="{DynamicResource EditProductTextBlock}"/>
-        <ItemsControl Grid.Column="1" Grid.Row="1"
-                      Grid.RowSpan="2"
-                      ItemsSource="{Binding Keys}"
-                      ItemTemplate="{StaticResource EditKeyTemplate}" />
+        <GroupBox Grid.Column="0" Grid.Row="1"
+                  Grid.ColumnSpan="2" Grid.RowSpan="2"
+                  Header="Keys" 
+                  Style="{DynamicResource EditKeysGroupBox}">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding Keys}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:EditKeyControl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-        <!-- Add New Key -->
-        <Button Grid.Row="3" Grid.Column="2" Width="100" 
-                HorizontalAlignment="Right"
-                Command="controls:EditProductControl.AddKeyCommand">Add Key</Button>
-
+                <!-- Add New Key -->
+                <Button Style="{StaticResource AddButton}" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="controls:EditProductControl.AddKeyCommand" /> 
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

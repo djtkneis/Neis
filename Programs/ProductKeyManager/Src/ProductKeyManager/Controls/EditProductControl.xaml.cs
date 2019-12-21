@@ -19,10 +19,7 @@ namespace Neis.ProductKeyManager.Controls
     /// </summary>
     public partial class EditProductControl : Window
     {
-        /// <summary>
-        /// DeleteKey Command
-        /// </summary>
-        public static RoutedCommand DeleteKeyCommand = new RoutedCommand("DeleteKeyCommand", typeof(EditProductControl));
+
         /// <summary>
         /// AddKey Command
         /// </summary>
@@ -32,7 +29,6 @@ namespace Neis.ProductKeyManager.Controls
         {
             InitializeComponent();
 
-            CommandBindings.Add(new CommandBinding(DeleteKeyCommand, Execute_DeleteKeyCommand));
             CommandBindings.Add(new CommandBinding(AddKeyCommand, Execute_AddKeyCommand));
         }
 
@@ -56,27 +52,6 @@ namespace Neis.ProductKeyManager.Controls
             }
 
             p.Keys.Add(new GenericKey());
-        }
-        /// <summary>
-        /// Occurs when the <see cref="DeleteKeyCommand"/> is executed
-        /// </summary>
-        /// <param name="sender">Sender of the event.</param>
-        /// <param name="args">Arguments for the event.</param>
-        private void Execute_DeleteKeyCommand(object sender, ExecutedRoutedEventArgs args)
-        {
-            var key = args.Parameter as GenericKey;
-            if (key == null)
-            {
-                return;
-            }
-
-            var result =  MessageBox.Show(
-                string.Format("Are you sure you want to delete {0}?", key.Value), "Confirm delete key", MessageBoxButton.YesNo);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                key.MarkForDeletion();
-            }
         }
     }
 }

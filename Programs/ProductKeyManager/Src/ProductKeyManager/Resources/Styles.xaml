@@ -15,6 +15,7 @@
 
     
     <!-- Images -->
+    <Image x:Key="ImageAdd" Source="/Neis.ProductKeyManager;component/Resources/images/add.png" />
     <Image x:Key="ImageCopyToClipboard" Source="/Neis.ProductKeyManager;component/Resources/images/copy_to_clipboard.png" />
     <Image x:Key="ImageEdit" Source="/Neis.ProductKeyManager;component/Resources/images/edit.png" />
     <Image x:Key="ImageDelete" Source="/Neis.ProductKeyManager;component/Resources/images/delete.png" />
@@ -47,6 +48,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style TargetType="Button" 
+           x:Key="AddButton"
+           BasedOn="{StaticResource ImageButton}">
+        <Setter Property="Content" Value="{DynamicResource ImageAdd}" />
+        <Setter Property="ToolTip" Value="Click to add." />
     </Style>
     <Style TargetType="Button" 
            x:Key="ClipboardCopyButton"
@@ -93,13 +100,19 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="Grid"
-           x:Key="GridProducts"
-           BasedOn="{StaticResource GridHoverHighlight}">
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-    </Style>
 
+
+    <!-- GroupBox -->
+    <Style TargetType="GroupBox" 
+           BasedOn="{StaticResource {x:Type GroupBox}}">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="GroupBox" 
+           x:Key="EditKeysGroupBox"
+           BasedOn="{StaticResource {x:Type GroupBox}}">
+        <Setter Property="FontSize" Value="16px" />
+    </Style>
+    
     
     <!-- TextBlock -->
     <Style TargetType="TextBlock">
@@ -137,6 +150,7 @@
            BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="16px" />
         <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
     
     <!-- TextBox -->
@@ -146,12 +160,12 @@
     </Style>
     <Style TargetType="TextBox" 
            BasedOn="{StaticResource {x:Type TextBox}}"
-           x:Key="TextBoxEditKey">
-        <Setter Property="FontSize" Value="16px" />
+           x:Key="EditKeyTextBox">
+        <Setter Property="FontSize" Value="14px" />
     </Style>
     <Style TargetType="TextBox" 
            BasedOn="{StaticResource {x:Type TextBox}}"
-           x:Key="TextBoxEditProductName">
+           x:Key="EditProductNameTextBox">
         <Setter Property="FontSize" Value="20px" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>

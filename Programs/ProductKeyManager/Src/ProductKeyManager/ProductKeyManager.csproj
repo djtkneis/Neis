@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\EditKeyControl.xaml.cs">
+      <DependentUpon>EditKeyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EditProductControl.xaml.cs">
       <DependentUpon>EditProductControl.xaml</DependentUpon>
     </Compile>
@@ -69,6 +72,10 @@
       <DependentUpon>ProductControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Value Converters\TrimTextConverter.cs" />
+    <Page Include="Controls\EditKeyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\EditProductControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +153,9 @@
   <ItemGroup>
     <Resource Include="Resources\images\delete.png" />
     <Resource Include="Resources\images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\images\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

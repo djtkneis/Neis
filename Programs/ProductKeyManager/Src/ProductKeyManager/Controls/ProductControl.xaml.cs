@@ -76,6 +76,7 @@ namespace Neis.ProductKeyManager.Controls
 
             var dlg = new EditProductControl();
             dlg.DataContext = product;
+            dlg.Owner = Window.GetWindow(this);
             dlg.ShowDialog();
         }
         /// <summary>
@@ -92,7 +93,10 @@ namespace Neis.ProductKeyManager.Controls
             }
 
             var result = MessageBox.Show(
-                string.Format("Are you sure you want to delete {0} and all associated keys?", product.Name), "Confirm delete product", MessageBoxButton.YesNo);
+                Application.Current.MainWindow, 
+                string.Format("Are you sure you want to delete {0} and all associated keys?", product.Name), 
+                "Confirm delete product", 
+                MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
