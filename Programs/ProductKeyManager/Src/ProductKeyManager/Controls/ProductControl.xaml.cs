@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -51,10 +52,20 @@ namespace Neis.ProductKeyManager.Controls
             return product;
         }
 
+        /// <summary>
+        /// Determines whether or not any modify commands can be executed
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="args">Arguments for the event.</param>
         private void CanExecute_ModifyCommand(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = GetDataContext(sender) != null;
         }
+        /// <summary>
+        /// Occurs when the <see cref="EditCommand"/> is executed
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="args">Arguments for the event.</param>
         private void Execute_EditCommand(object sender, ExecutedRoutedEventArgs args)
         {
             var product = GetDataContext(sender);
@@ -63,8 +74,15 @@ namespace Neis.ProductKeyManager.Controls
                 return;
             }
 
-            MessageBox.Show(string.Format("Edit Product clicked for {0}", product.Name));
+            var dlg = new EditProductControl();
+            dlg.DataContext = product;
+            dlg.ShowDialog();
         }
+        /// <summary>
+        /// Occurs when the <see cref="DeleteCommand"/> is executed
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="args">Arguments for the event.</param>
         private void Execute_DeleteCommand(object sender, ExecutedRoutedEventArgs args)
         {
             var product = GetDataContext(sender);
@@ -73,7 +91,13 @@ namespace Neis.ProductKeyManager.Controls
                 return;
             }
 
-            MessageBox.Show(string.Format("Delete Product clicked for {0}", product.Name));
+            var result = MessageBox.Show(
+                string.Format("Are you sure you want to delete {0} and all associated keys?", product.Name), "Confirm delete product", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                product.IsMarkedDeleted = true;
+            }
         }
     }
 }

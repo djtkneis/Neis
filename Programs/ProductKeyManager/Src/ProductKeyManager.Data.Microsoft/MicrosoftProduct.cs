@@ -19,8 +19,66 @@ namespace Neis.ProductKeyManager.Data.Microsoft
     {
         public MicrosoftProduct()
         {
-            Keys = new ObservableCollection<MicrosoftKey>();
+            _Keys = new ObservableCollection<MicrosoftKey>();
+            _Keys.CollectionChanged += Keys_CollectionChanged;
         }
+
+        /// <summary>
+        /// Event for when the Keys collection has changed
+        /// </summary>
+        /// <param name="sender">Sender of this event</param>
+        /// <param name="e">Arguments for this event</param>
+        private void Keys_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    foreach (var item in e.NewItems)
+                    {
+                        var key = item as NotifiableBase;
+                        if (key != null)
+                        {
+                            key.OnMarkForDeletion += Key_OnMarkForDeletion;
+                        }
+                    }
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                    {
+                        var key = item as NotifiableBase;
+                        if (key != null)
+                        {
+                            key.OnMarkForDeletion -= Key_OnMarkForDeletion;
+                        }
+                    }
+                    break;
+            }
+        }
+        /// <summary>
+        /// Event that occurs when a Key has been marked for deletion
+        /// </summary>
+        /// <param name="obj">Key that has been marked for deletion</param>
+        private void Key_OnMarkForDeletion(NotifiableBase obj)
+        {
+            var key = obj as MicrosoftKey;
+            if (key != null)
+            {
+                _Keys.Remove(key);
+            }
+        }
+
+        /// <summary>
+        /// Mark the current object as clean (aka not dirty)
+        /// </summary>
+        public override void MarkNotDirty()
+        {
+            foreach (var k in Keys)
+            {
+                k.MarkNotDirty();
+            }
+            base.MarkNotDirty();
+        }
+
 
         #region Name
         /// <summary>
@@ -62,14 +120,7 @@ namespace Neis.ProductKeyManager.Data.Microsoft
         [System.Xml.Serialization.XmlElement("Key", Type = typeof(MicrosoftKey))]
         public ObservableCollection<MicrosoftKey> Keys
         {
-            get
-            {
-                if (_Keys == null)
-                {
-                    _Keys = new ObservableCollection<MicrosoftKey>();
-                }
-                return _Keys;
-            }
+            get { return _Keys; }
             set
             {
                 if (_Keys != value)

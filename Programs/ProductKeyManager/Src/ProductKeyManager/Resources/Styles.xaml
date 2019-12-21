@@ -7,9 +7,10 @@
     <!-- TODO:  Workout a good color scheme / theme -->
     
     <!-- Brushes -->
-    <SolidColorBrush x:Key="BrushButtonBorder" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" Opacity="1" />
-    <SolidColorBrush x:Key="BrushHover" Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" Opacity="0.5" />
-    <SolidColorBrush x:Key="BrushMouseDown" Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" Opacity="0.6" />
+    <SolidColorBrush x:Key="BrushButtonBorder" Color="{x:Static Colors.DarkGray}" Opacity="1" />
+    <SolidColorBrush x:Key="BrushHover" Color="{x:Static Colors.LightGray}" Opacity="0.3" />
+    <SolidColorBrush x:Key="BrushMouseDown" Color="{x:Static Colors.LightGray}" Opacity="0.9" />
+    <SolidColorBrush x:Key="BrushActiveBackground" Color="{x:Static Colors.CornflowerBlue}" Opacity="0.25" />
     <SolidColorBrush x:Key="TransparentColor" Color="Transparent" Opacity="1" />
 
     
@@ -21,13 +22,13 @@
     
     <!-- Button -->
     <Style TargetType="Button">
-        <Setter Property="Margin" Value="5" />
+        <Setter Property="Margin" Value="2" />
     </Style>
     <Style TargetType="Button" 
            x:Key="ImageButton"
            BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Width" Value="25" />
-        <Setter Property="Height" Value="25" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -35,7 +36,7 @@
                         <Border x:Name="ButtonBorder"
                                 CornerRadius="5"
                                 BorderThickness="2">
-                            <ContentPresenter Content="{TemplateBinding Button.Content}" />
+                            <ContentPresenter Margin="5" Content="{TemplateBinding Button.Content}" />
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -51,21 +52,35 @@
            x:Key="ClipboardCopyButton"
            BasedOn="{StaticResource ImageButton}">
         <Setter Property="Content" Value="{DynamicResource ImageCopyToClipboard}" />
+        <Setter Property="ToolTip" Value="Click to copy to clipboard." />
     </Style>
     <Style TargetType="Button" 
            x:Key="EditButton"
            BasedOn="{StaticResource ImageButton}">
         <Setter Property="Content" Value="{DynamicResource ImageEdit}" />
+        <Setter Property="ToolTip" Value="Click to edit." />
     </Style>
     <Style TargetType="Button" 
            x:Key="DeleteButton"
            BasedOn="{StaticResource ImageButton}">
         <Setter Property="Content" Value="{DynamicResource ImageDelete}" />
+        <Setter Property="ToolTip" Value="Click to delete." />
     </Style>
 
     <!-- Expander -->
     <Style TargetType="Expander">
-        <Setter Property="Margin" Value="5" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Expander.IsMouseOver" Value="True" />
+                    <Condition Property="Expander.IsExpanded" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource BrushHover}" />
+            </MultiTrigger>
+            <Trigger Property="Expander.IsExpanded" Value="True">
+                <Setter Property="Background" Value="{StaticResource BrushActiveBackground}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
     
@@ -117,12 +132,28 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+    <Style TargetType="TextBlock" 
+           x:Key="EditProductTextBlock"
+           BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="16px" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
     
     <!-- TextBox -->
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="5" />
         <Setter Property="FontSize" Value="12px" />
+    </Style>
+    <Style TargetType="TextBox" 
+           BasedOn="{StaticResource {x:Type TextBox}}"
+           x:Key="TextBoxEditKey">
+        <Setter Property="FontSize" Value="16px" />
+    </Style>
+    <Style TargetType="TextBox" 
+           BasedOn="{StaticResource {x:Type TextBox}}"
+           x:Key="TextBoxEditProductName">
+        <Setter Property="FontSize" Value="20px" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>

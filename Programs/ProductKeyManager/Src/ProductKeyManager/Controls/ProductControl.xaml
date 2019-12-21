@@ -14,15 +14,22 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Style="{StaticResource GridProducts}">
+    <Grid>
         <Expander>
             <Expander.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource ExpanderHeaderTextBlock}" />
-                    <TextBlock Style="{StaticResource KeyCountTextBlock}" />
-                    <Button Style="{StaticResource EditButton}" Command="controls:ProductControl.EditCommand" />
-                    <Button Style="{StaticResource DeleteButton}" Command="controls:ProductControl.DeleteCommand" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource ExpanderHeaderTextBlock}" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource KeyCountTextBlock}" />
+                    <Button Grid.Column="2" Style="{StaticResource EditButton}" Command="controls:ProductControl.EditCommand" />
+                    <Button Grid.Column="3" Style="{StaticResource DeleteButton}" Command="controls:ProductControl.DeleteCommand" />
+                </Grid>
             </Expander.Header>
             <ItemsControl ItemsSource="{Binding Keys}" Margin="25,0,0,0">
                 <ItemsControl.ItemTemplate>

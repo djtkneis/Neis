@@ -18,11 +18,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Style="{StaticResource KeyTextBlock}" />
         <Button Grid.Column="1" Style="{StaticResource ClipboardCopyButton}"
-                Command="controls:KeyControl.CopyToClipboardCommand"
-                ToolTip="Click to copy key to clipboard."/>
+                Command="controls:KeyControl.CopyToClipboardCommand" />
     </Grid>
 </UserControl>

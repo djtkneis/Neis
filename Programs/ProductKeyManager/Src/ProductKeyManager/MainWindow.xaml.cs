@@ -103,6 +103,7 @@ namespace Neis.ProductKeyManager
         private delegate int MergeGenericProductsDelegate(ObservableCollection<GenericProduct> products);
         private delegate int MergeMicrosoftProductsDelegate(ObservableCollection<MicrosoftProduct> products);
 
+        private bool _isLoading = false;
         private BackgroundWorker _loadingWorker = new BackgroundWorker();
         private volatile Dictionary<string, GenericProduct> _products = new Dictionary<string, GenericProduct>();
 
@@ -119,6 +120,7 @@ namespace Neis.ProductKeyManager
 
             KeyFile = new GenericKeyFile();
             ProductsView = CollectionViewSource.GetDefaultView(KeyFile.Products);
+            ProductsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             this.SetStatus("Initializing stored keys");
 
@@ -139,7 +141,18 @@ namespace Neis.ProductKeyManager
                 MergeGenericProducts(kf.Products);
             }
 
+            KeyFile.MarkNotDirty();
+            KeyFile.OnIsDirty += KeyFile_OnIsDirty;
             SetDefaultStatus();
+        }
+
+        /// <summary>
+        /// Event for when the <see cref="KeyFile"/> has been marked as dirty
+        /// </summary>
+        /// <param name="obj">Object that has been marked dirty</param>
+        private void KeyFile_OnIsDirty(NotifiableBase obj)
+        {
+            SaveCache();
         }
 
         /// <summary>
@@ -240,49 +253,57 @@ namespace Neis.ProductKeyManager
                 return (int)Dispatcher.Invoke(new MergeKeysDelegate(MergeKeys), product, keys);
             }
 
+            _isLoading = true;
             int keyCount = 0;
-            GenericProduct cp = null;
-            foreach (var p in KeyFile.Products)
-            {
-                if (p.Name == product)
-                    cp = p;
-            }
-            if (cp == null)
-            {
-                cp = new GenericProduct()
-                {
-                    Name = product,
-                    Keys = new ObservableCollection<GenericKey>(keys)
-                };
 
-                KeyFile.Products.Add(cp);
-                _products.Add(cp.Name, cp);
-                keyCount += cp.Keys.Count;
-            }
-            else
+            try
             {
-                // Merge key collection for this product
-                foreach (var key in keys)
+                GenericProduct cp = null;
+                foreach (var p in KeyFile.Products)
                 {
-                    if (!cp.Keys.Any(k => k.Value == key.Value))
-                    {
-                        cp.Keys.Add(new GenericKey() { Value = key.Value });
-                        keyCount++;
-                    }
+                    if (p.Name == product)
+                        cp = p;
                 }
-
-                // Update Hash Table
-                if (!_products.ContainsKey(product))
+                if (cp == null)
                 {
-                    // in theory, this should never happen if we are properly keeping the dictionary in sync with the cache
-                    _products.Add(product, cp);
+                    cp = new GenericProduct()
+                    {
+                        Name = product,
+                        Keys = new ObservableCollection<GenericKey>(keys)
+                    };
+
+                    KeyFile.Products.Add(cp);
+                    _products.Add(cp.Name, cp);
+                    keyCount += cp.Keys.Count;
                 }
                 else
                 {
-                    _products[product] = cp;
+                    // Merge key collection for this product
+                    foreach (var key in keys)
+                    {
+                        if (!cp.Keys.Any(k => k.Value == key.Value))
+                        {
+                            cp.Keys.Add(new GenericKey() { Value = key.Value });
+                            keyCount++;
+                        }
+                    }
+
+                    // Update Hash Table
+                    if (!_products.ContainsKey(product))
+                    {
+                        // in theory, this should never happen if we are properly keeping the dictionary in sync with the cache
+                        _products.Add(product, cp);
+                    }
+                    else
+                    {
+                        _products[product] = cp;
+                    }
                 }
             }
-
+            finally
+            {
+                _isLoading = false;
+            }
             return keyCount;
         }
         /// <summary>
@@ -343,7 +364,10 @@ namespace Neis.ProductKeyManager
         /// </summary>
         private void SaveCache()
         {
-            DataUtility<GenericKeyFile>.SaveToFile(Properties.Settings.Default.DataFile, KeyFile);
+            if (!_isLoading)
+            {
+                DataUtility<GenericKeyFile>.SaveToFile(Properties.Settings.Default.DataFile, KeyFile);
+            }
         }
 
         /// <summary>

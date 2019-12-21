@@ -31,11 +31,6 @@ namespace Neis.ProductKeyManager.Controls
 
             this.CommandBindings.Add(new CommandBinding(CopyToClipboardCommand, Execute_CopyToCliboardCommand, CanExecute_CopytToCliboardCommand));
         }
-        private void CanExecute_CopytToCliboardCommand(object sender, CanExecuteRoutedEventArgs args)
-        {
-            GenericKey val = GetDataContext(sender);
-            args.CanExecute = val != null && !string.IsNullOrWhiteSpace(val.Value);
-        }
 
         private GenericKey GetDataContext(object sender)
         {
@@ -48,6 +43,14 @@ namespace Neis.ProductKeyManager.Controls
             var key = control.DataContext as GenericKey;
             return key;
         }
+        
+
+        private void CanExecute_CopytToCliboardCommand(object sender, CanExecuteRoutedEventArgs args)
+        {
+            GenericKey val = GetDataContext(sender);
+            args.CanExecute = val != null && !string.IsNullOrWhiteSpace(val.Value);
+        }
+
         private void Execute_CopyToCliboardCommand(object sender, ExecutedRoutedEventArgs args)
         {
             var key = GetDataContext(sender);
