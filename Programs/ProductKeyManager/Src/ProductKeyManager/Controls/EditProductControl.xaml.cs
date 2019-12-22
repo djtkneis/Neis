@@ -1,16 +1,6 @@
 ﻿using Neis.ProductKeyManager.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Neis.ProductKeyManager.Controls
 {
@@ -24,34 +14,55 @@ namespace Neis.ProductKeyManager.Controls
         /// AddKey Command
         /// </summary>
         public static RoutedCommand AddKeyCommand = new RoutedCommand("AddKeyCommand", typeof(EditProductControl));
-
+        /// <summary>
+        /// OK Command
+        /// </summary>
+        public static RoutedCommand CancelCommand = new RoutedCommand("CancelCommand", typeof(EditProductControl));        
+        /// <summary>
+        /// OK Command
+        /// </summary>
+        public static RoutedCommand OkCommand = new RoutedCommand("OkCommand", typeof(EditProductControl));
+        
+        /// <summary>
+        /// Constructor for the EditProductControl class
+        /// </summary>
         public EditProductControl()
         {
             InitializeComponent();
 
-            CommandBindings.Add(new CommandBinding(AddKeyCommand, Execute_AddKeyCommand));
+            CommandBindings.Add(new CommandBinding(AddKeyCommand, CommandExecution.Execute_AddKeyCommand, CommandExecution.CanExecute_ModifyProductCommand));
+            CommandBindings.Add(new CommandBinding(CancelCommand, Execute_CancelCommand));
+            CommandBindings.Add(new CommandBinding(OkCommand, Execute_OkCommand, CommandExecution.CanExecute_SaveProductCommand));
         }
 
-        private GenericProduct GetDataContext()
-        {
-            return DataContext as GenericProduct;
-        }
-
-        
         /// <summary>
-        /// Occurs when the <see cref="AddKeyCommand"/> is executed
+        /// Occurs when the OK command is executed
         /// </summary>
-        /// <param name="sender">Sender of the event.</param>
-        /// <param name="args">Arguments for the event.</param>
-        private void Execute_AddKeyCommand(object sender, ExecutedRoutedEventArgs args)
+        /// <param name="sender">Sender of this event.</param>
+        /// <param name="args">Arguments for this event.</param>
+        private void Execute_OkCommand(object sender, ExecutedRoutedEventArgs args)
         {
-            var p = GetDataContext();
-            if (p == null)
+            this.DialogResult = true;
+            this.Close();
+        }
+        /// <summary>
+        /// Occurs when the Cancel command is executed
+        /// </summary>
+        /// <param name="sender">Sender of this event.</param>
+        /// <param name="args">Arguments for this event.</param>
+        private void Execute_CancelCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            var product = DataContext as GenericProduct;
+            if (product != null && product.IsDirty)
             {
-                return;
+                var res = MessageBox.Show(Application.Current.MainWindow, "Are you sure you want to cancel and discard your changes?", "Confirm cancel", MessageBoxButton.YesNo);
+                if (res == MessageBoxResult.No)
+                {
+                    return;
+                }
             }
-
-            p.Keys.Add(new GenericKey());
+            this.DialogResult = false;
+            this.Close();
         }
     }
 }

@@ -25,6 +25,12 @@
     <Style TargetType="Button">
         <Setter Property="Margin" Value="2" />
     </Style>
+    <Style TargetType="Button"
+           x:Key="DialogButton"
+           BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Height" Value="32" />
+    </Style>
     <Style TargetType="Button" 
            x:Key="ImageButton"
            BasedOn="{StaticResource {x:Type Button}}">

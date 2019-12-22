@@ -6,7 +6,7 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:controls="clr-namespace:Neis.ProductKeyManager.Controls"
         Title="Product Key Manager" Height="500" Width="800" 
-        x:Name="_this">
+        x:Name="_this" Closing="MainWindow_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,10 +28,14 @@
             <Menu.Items>
                 <MenuItem Header="_File">
                     <MenuItem.Items>
+                        <MenuItem Header="_AddProduct"
+                                  Command="local:MainWindow.AddProductCommand" />
+                        <Separator />
                         <MenuItem Header="_Save"
                                   Command="local:MainWindow.SaveCommand"/>
                         <MenuItem Header="_Import"
                                   Command="local:MainWindow.ImportCommand"/>
+                        <Separator />
                         <MenuItem Header="E_xit"
                                   Command="local:MainWindow.ExitCommand"/>
                     </MenuItem.Items>
@@ -44,7 +48,7 @@
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <ItemsControl Name="icProducts"
-                          ItemsSource="{Binding ElementName=_this, Path=ProductsView, diag:PresentationTraceSources.TraceLevel=High}">
+                          ItemsSource="{Binding ElementName=_this, Path=ProductsView}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <controls:ProductControl />

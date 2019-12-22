@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CommandExecution.cs" />
     <Compile Include="Controls\EditKeyControl.xaml.cs">
       <DependentUpon>EditKeyControl.xaml</DependentUpon>
     </Compile>
@@ -138,6 +139,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\Logging\Logging.csproj">
+      <Project>{d5206a06-f3a6-4e61-924d-0b3d5ccd2b1b}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProductKeyManager.Data.Microsoft\ProductKeyManager.Data.Microsoft.csproj">
       <Project>{cca6b0a8-e1fb-4d1f-a65d-a7d7885337c7}</Project>
       <Name>ProductKeyManager.Data.Microsoft</Name>

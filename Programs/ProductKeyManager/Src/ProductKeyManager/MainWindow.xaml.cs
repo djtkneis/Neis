@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Neis.ProductKeyManager.Controls;
 using Neis.ProductKeyManager.Data;
 using Neis.ProductKeyManager.Data.Microsoft;
 using System;
@@ -18,6 +19,10 @@ namespace Neis.ProductKeyManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// AddProduct Command
+        /// </summary>
+        public static RoutedCommand AddProductCommand = new RoutedCommand("AddProductCommand", typeof(MainWindow));
         /// <summary>
         /// Exit Command
         /// </summary>
@@ -105,7 +110,6 @@ namespace Neis.ProductKeyManager
 
         private bool _isLoading = false;
         private BackgroundWorker _loadingWorker = new BackgroundWorker();
-        private volatile Dictionary<string, GenericProduct> _products = new Dictionary<string, GenericProduct>();
 
         /// <summary>
         /// Constructor for the <see cref="MainWindow"/> class
@@ -114,6 +118,7 @@ namespace Neis.ProductKeyManager
         {
             InitializeComponent();
 
+            CommandBindings.Add(new CommandBinding(AddProductCommand, CommandExecution.Execute_AddProductCommand));
             CommandBindings.Add(new CommandBinding(ExitCommand, ExecuteExitCommand));
             CommandBindings.Add(new CommandBinding(ImportCommand, ExecuteImportCommand, IsDoneLoading));
             CommandBindings.Add(new CommandBinding(SaveCommand, ExecuteSaveCommand));
@@ -126,6 +131,41 @@ namespace Neis.ProductKeyManager
 
             _loadingWorker.DoWork += _loadingWorker_DoWork;
             _loadingWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Occurs when the MainWindow is about to close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            // Save Cache if dirty
+            if (KeyFile.IsDirty)
+            {
+                SaveCache();
+            }
+
+            // check if log file exists
+            var filename = Neis.ProductKeyManager.Properties.Settings.Default.LogFile;
+            var max = Neis.ProductKeyManager.Properties.Settings.Default.LogFileMaxSizeMB * 1024 * 1024;
+            if (File.Exists(filename))
+            {
+                // if logfile is greater than the max size, keep deleting just the first line until the size fits within the restraints
+                var info = new FileInfo(filename);
+                while (info.Length > max)
+                {
+                    var diff = info.Length - max;
+                    var lines = File.ReadAllLines(filename);
+                    var skipLines = 0;
+                    while (diff > 0)
+                    {
+                        diff -= (lines[skipLines++].Length + 2); // 2 = length of Windows line endings '/n/r'
+                    }
+                    File.WriteAllLines(filename, lines.Skip(skipLines + 1).ToArray());
+                    info = new FileInfo(filename);
+                }
+            }
         }
 
         /// <summary>
@@ -146,6 +186,7 @@ namespace Neis.ProductKeyManager
             SetDefaultStatus();
         }
 
+
         /// <summary>
         /// Event for when the <see cref="KeyFile"/> has been marked as dirty
         /// </summary>
@@ -153,6 +194,7 @@ namespace Neis.ProductKeyManager
         private void KeyFile_OnIsDirty(NotifiableBase obj)
         {
             SaveCache();
+            KeyFile.MarkNotDirty();
         }
 
         /// <summary>
@@ -249,7 +291,7 @@ namespace Neis.ProductKeyManager
         /// <param name="product">Name of product to merge keys list into</param>
         /// <param name="keys">List of <see cref="GenericKey"/> objects to merge</param>
         /// <returns>Number of keys that were added</returns>
-        private int MergeKeys(string product, ObservableCollection<GenericKey> keys)
+        public int MergeKeys(string product, ObservableCollection<GenericKey> keys)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -276,7 +318,6 @@ namespace Neis.ProductKeyManager
                     };
 
                     KeyFile.Products.Add(cp);
-                    _products.Add(cp.Name, cp);
                     keyCount += cp.Keys.Count;
                 }
                 else
@@ -289,17 +330,6 @@ namespace Neis.ProductKeyManager
                             cp.Keys.Add(new GenericKey() { Value = key.Value });
                             keyCount++;
                         }
-                    }
-
-                    // Update Hash Table
-                    if (!_products.ContainsKey(product))
-                    {
-                        // in theory, this should never happen if we are properly keeping the dictionary in sync with the cache
-                        _products.Add(product, cp);
-                    }
-                    else
-                    {
-                        _products[product] = cp;
                     }
                 }
             }
