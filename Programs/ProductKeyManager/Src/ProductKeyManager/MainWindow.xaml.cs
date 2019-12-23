@@ -119,7 +119,7 @@ namespace Neis.ProductKeyManager
             InitializeComponent();
 
             CommandBindings.Add(new CommandBinding(AddProductCommand, CommandExecution.Execute_AddProductCommand));
-            CommandBindings.Add(new CommandBinding(ExitCommand, ExecuteExitCommand));
+            CommandBindings.Add(new CommandBinding(ExitCommand, CommandExecution.Execute_ExitCommand));
             CommandBindings.Add(new CommandBinding(ImportCommand, ExecuteImportCommand, IsDoneLoading));
             CommandBindings.Add(new CommandBinding(SaveCommand, ExecuteSaveCommand));
 
@@ -207,15 +207,6 @@ namespace Neis.ProductKeyManager
             args.CanExecute = !_loadingWorker.IsBusy;
         }
 
-        /// <summary>
-        /// Executes the <see cref="ExitCommand"/>
-        /// </summary>
-        /// <param name="sender">Sender of this event</param>
-        /// <param name="args">Arguments for this event</param>
-        private void ExecuteExitCommand(object sender, ExecutedRoutedEventArgs args)
-        {
-            Close();
-        }
         /// <summary>
         /// Executes the <see cref="ImportCommand"/>
         /// </summary>

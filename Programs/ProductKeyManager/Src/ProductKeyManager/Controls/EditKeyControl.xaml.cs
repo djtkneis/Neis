@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Neis.ProductKeyManager.Controls
@@ -21,6 +22,13 @@ namespace Neis.ProductKeyManager.Controls
             InitializeComponent();
 
             CommandBindings.Add(new CommandBinding(DeleteKeyCommand, CommandExecution.Execute_DeleteKeyCommand, CommandExecution.CanExecute_ModifyKeyCommand));
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var control = sender as FrameworkElement;
+            var binding = control.GetBindingExpression(TextBox.TextProperty);
+            binding.UpdateSource();
         }
     }
 }

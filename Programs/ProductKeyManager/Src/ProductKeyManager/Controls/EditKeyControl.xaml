@@ -20,8 +20,8 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Column="0" Grid.Row="0"
-                 Text="{Binding Value}"
-                 Style="{StaticResource EditKeyTextBox}" />
+                 Text="{Binding Value, UpdateSourceTrigger=Explicit}"
+                 Style="{StaticResource EditKeyTextBox}" TextChanged="TextBox_TextChanged" />
         <Button Grid.Column="1" 
                 Style="{StaticResource DeleteButton}" 
                 Command="controls:EditKeyControl.DeleteKeyCommand" />

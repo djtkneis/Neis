@@ -59,7 +59,9 @@ namespace Neis.ProductKeyManager.Controls
         internal static void CanExecute_SaveProductCommand(object sender, CanExecuteRoutedEventArgs args)
         {
             var product = GetContextObject<GenericProduct>(sender);
-            args.CanExecute = product != null && product.IsDirty && product.Keys.Count > 0 && product.Keys.All(k => !string.IsNullOrWhiteSpace(k.Value));
+            args.CanExecute = product != null && product.Keys.Count > 0 &&
+                (product.IsDirty || product.Keys.Any(k => k.IsDirty)) &&
+                product.Keys.All(k => !string.IsNullOrWhiteSpace(k.Value));
         }
 
         /// <summary>
@@ -85,16 +87,10 @@ namespace Neis.ProductKeyManager.Controls
         /// <param name="args">Arguments for the event.</param>
         internal static void Execute_AddProductCommand(object sender, ExecutedRoutedEventArgs args)
         {
-            var mainWindow = sender as MainWindow;
-            if (mainWindow == null)
-            {
-                App.LogWriter.ShowError("Cannot execute 'Add Product' command because 'main window' is null");
-                return;
-            }
-            var keyFile = mainWindow.KeyFile;
+            var keyFile = args.Parameter as GenericKeyFile;
             if (keyFile == null)
             {
-                App.LogWriter.ShowError("Cannot execute 'Add Product' command because 'key fiile' is null");
+                App.LogWriter.ShowError("Cannot execute 'Add Product' command because 'key file' is null");
                 return;
             }
 
@@ -168,6 +164,15 @@ namespace Neis.ProductKeyManager.Controls
             dlg.ShowDialog();
         }
         /// <summary>
+        /// Occurs when an Exit command is executed
+        /// </summary>
+        /// <param name="sender">Sender of this event</param>
+        /// <param name="args">Arguments for this event</param>
+        internal static void Execute_ExitCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            App.Current.MainWindow.Close();
+        }
+        /// <summary>
         /// Occurs when a command to delete a product key is executed
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
@@ -216,7 +221,7 @@ namespace Neis.ProductKeyManager.Controls
 
             var result = MessageBox.Show(
                 Application.Current.MainWindow,
-                string.Format("Are you sure you want to delete {0} and all associated keys?", obj),
+                string.Format("Are you sure you want to delete {0} and all associated keys?", obj.Name),
                 "Confirm delete product",
                 MessageBoxButton.YesNo);
 

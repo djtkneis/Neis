@@ -17,9 +17,9 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>  <!-- Header -->
-            <RowDefinition Height="*"/>               <!-- Body -->
-            <RowDefinition Height="Auto" />     <!-- Footer -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Menu Grid.Column="0" Grid.Row="0"
@@ -28,15 +28,22 @@
             <Menu.Items>
                 <MenuItem Header="_File">
                     <MenuItem.Items>
-                        <MenuItem Header="_AddProduct"
-                                  Command="local:MainWindow.AddProductCommand" />
+                        <MenuItem Header="_Add Product"
+                                  InputGestureText="Ctrl + A"
+                                  Command="local:MainWindow.AddProductCommand"
+                                  CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
                         <Separator />
                         <MenuItem Header="_Save"
-                                  Command="local:MainWindow.SaveCommand"/>
+                                  InputGestureText="Ctrl + S"
+                                  Command="local:MainWindow.SaveCommand"
+                                   CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
                         <MenuItem Header="_Import"
-                                  Command="local:MainWindow.ImportCommand"/>
+                                  InputGestureText="Ctrl + I"
+                                  Command="local:MainWindow.ImportCommand"
+                                  CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
                         <Separator />
                         <MenuItem Header="E_xit"
+                                  InputGestureText="Ctrl + X"
                                   Command="local:MainWindow.ExitCommand"/>
                     </MenuItem.Items>
                 </MenuItem>
@@ -58,6 +65,12 @@
         </ScrollViewer>
 
         <TextBlock Grid.Row="2" Name="txtStatusBar"/>
-        
     </Grid>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="A" Modifiers="Control" Command="local:MainWindow.AddProductCommand" CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
+        <KeyBinding Key="S" Modifiers="Control" Command="local:MainWindow.SaveCommand" CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
+        <KeyBinding Key="I" Modifiers="Control" Command="local:MainWindow.ImportCommand" CommandParameter="{Binding ElementName=_this, Path=KeyFile}" />
+        <KeyBinding Key="X" Modifiers="Control" Command="local:MainWindow.ExitCommand" />
+    </Window.InputBindings>
 </Window>
